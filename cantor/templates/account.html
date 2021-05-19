@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<h1 style="color: white; background-color: #F46036; text-align: center;">Account</h1><hr>
+
+<div>
+{% for ticker, values in user_currency.items %}
+    {% if values != 0.00 %}
+        <div class="card text-white bg-success mb-3" style="width: 25%; display: inline-block; text-align: center;">
+          <div class="card-body">
+            <p class="card-text">{{values}} {{ticker}}</p>
+          </div>
+        </div>
+    {% endif %}
+{% endfor %}
+</div>
+
+<div class="card" style="width: 18rem; color: white; background-color: #F46036; justify-content: center; display: inline-block;">
+  {% if appropriate_user.profile_picture %}
+    <img src="{{appropriate_user.profile_picture.url}}" width=200 height=200 class="rounded-circle">
+  {% else %}
+    <img src="{% static 'images/people.png' %}" width=200 height=200 class="rounded-circle">
+  {% endif %}
+<div class="card-body">
+  <p class="card-text">
+    {{appropriate_user.user.first_name}} {{appropriate_user.user.last_name}}<hr>
+    <p class="card-text">
+      {% if appropriate_user.phone %}
+          <p>Phone: {{appropriate_user.phone}}</p>
+      {% endif %}
+      {% if appropriate_user.user.email %}
+          <p>Email: {{appropriate_user.user.email}}</p>
+      {% endif %}
+  </p>
+</div>
+</div>
+
+{% endif %}
+
+{% endblock content %}

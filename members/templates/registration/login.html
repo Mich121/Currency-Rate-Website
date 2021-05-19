@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="form-group">
+    <form method="POST" style="padding-top: 20px;">
+        {% csrf_token %}
+            <div class="mb-3">
+              <input type="text" class="form-control" name="username" placeholder="Username">
+            </div>
+            <div class="mb-3">
+              <input type="password" class="form-control" name="password" placeholder="Password">
+            </div>
+        <button class="btn btn-warning" style="color: white;">Login</button>
+    </div>
+
+{% endblock %}

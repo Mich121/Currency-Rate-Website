@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if user.id == profile.user.id %}
+        <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button class="btn btn-warning" style="color:white;"><span class="material-icons-outlined">done</span></button>
+        </div>
+        
+    {% else %}
+        You are not correct user...
+    {% endif %}
+{% else %}
+    You are not allowed...
+{% endif %}
+
+{% endblock %}

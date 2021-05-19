@@ -1,0 +1,10 @@
+/*map.html*/
+.map path:hover
+{
+    fill: #F3A712;
+}
+
+.map path
+{
+    fill:#29335C;
+}

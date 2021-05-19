@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 style="color: white; background-color: #FFCA3A; text-align: center;">Current Rate<hr>1.00 USD = {{currency_rate}} {{ticker}}</h1>
+
+{% if user.is_authenticated %}
+    <div class="form-group">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-warning" style="color: white;">Buy</button>
+    </div>
+
+    <script>
+        var name = "{{user.id}}";
+        document.getElementById("elder").value = name;
+    </script>
+    
+{% else %}
+<h1 style="color: white; background-color: #FFCA3A; text-align: center;">You must log to buy currency...</h1>
+{% endif %}
+
+{% endblock content %}
