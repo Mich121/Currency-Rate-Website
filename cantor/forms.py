@@ -18,6 +18,9 @@ class SellCurrencyForm(forms.ModelForm):
         fields = ('currency', 'price')
 
         widgets = {
-            'currency': forms.TextInput(attrs={'class':'form-control'}),           
-            'price': forms.NumberInput(attrs={'class':'form-control', 'min':0.00}),
+            'currency': forms.TextInput(attrs={'class':'form-control', 'readonly':'readonly'}),           
+            'price': forms.NumberInput(attrs={'class':'form-control', 'min':0.00, 'id':'amount'}),
         } 
+        labels = {
+            'price': ('Amount'),
+        }

@@ -3,8 +3,9 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<h1 style="color: white; background-color: #F46036; text-align: center;">Account</h1><hr>
-
+<h1 style="color: white; background-color: #DF2935; text-align: center;">Account</h1><hr>
+{% if user.id == appropriate_user.user.id %}
+<p style="color: white; background-color: #DF2935; width: 20%; font-size: 26px; text-align: center;">Currencies</p>
 <div>
 {% for ticker, values in user_currency.items %}
     {% if values != 0.00 %}
@@ -17,11 +18,13 @@
 {% endfor %}
 </div>
 
-<div class="card" style="width: 18rem; color: white; background-color: #F46036; justify-content: center; display: inline-block;">
+{% endif %}
+<p style="color: white; background-color: #DF2935; width: 20%; font-size: 26px; text-align: center;">Your page</p>
+<div class="card" style="width: 18rem; color: white; background-color: #DF2935; justify-content: center; display: inline-block;">
   {% if appropriate_user.profile_picture %}
-    <img src="{{appropriate_user.profile_picture.url}}" width=200 height=200 class="rounded-circle">
+    <img src="{{appropriate_user.profile_picture.url}}" width=200 height=200 class="rounded-circle" style="display: block; margin-left: auto; margin-right: auto;">
   {% else %}
-    <img src="{% static 'images/people.png' %}" width=200 height=200 class="rounded-circle">
+    <img src="{% static 'images/people.png' %}" width=200 height=200 class="rounded-circle" style="display: block; margin-left: auto; margin-right: auto;">
   {% endif %}
 <div class="card-body">
   <p class="card-text">

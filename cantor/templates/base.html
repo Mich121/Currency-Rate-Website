@@ -46,6 +46,22 @@
                                 </li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <i class="fs-4 bi-speedometer2"></i> 
+                                <span class="material-icons-outlined" style="font-size: 20px;">article</span>
+                                <span class="ms-1 d-none d-sm-inline" style="font-size: 25px;">Blog Section</span> 
+                            </a>
+                            <ul class="collapse show nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                                <li class="w-100">
+                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Articles</span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Add Article</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <hr>
                             {% if user.profile.id %}  <!--if you have a profile page (you add data like phone etc.)-->
                             <li>
                                 <a href="{% url 'update_profile_page' user.profile.id %}" class="nav-link px-0 align-middle">

@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-{% if user.is_authenticated %}
 
-<h1 style="color: white; background-color: #F46036; text-align: center;">Statistics</h1><hr>
+{% if user.is_authenticated %}
+{% if user.id == ownerpk %}
+
+<h1 style="color: white; background-color: #DF2935; text-align: center;">Statistics</h1><hr>
 {% for currency in currencies %}
     {% if currency.price != 0.00 %}
         <div class="card text-white bg-success mb-3" style="width: 25%; display: inline-block; text-align: center;">
@@ -18,6 +20,9 @@
         <img src="data:image/png;base64, {{chart|safe}}">
     {% endif %}
 
+{% else %}
+    You are not allowed here...
+{% endif %}
 {% endif %}
 
 {% endblock content %}

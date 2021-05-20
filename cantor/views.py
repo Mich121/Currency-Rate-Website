@@ -129,8 +129,13 @@ class Statistic(generic.ListView):
       context['currencies'] = currencies
 
       user_currency = {}
+      ownerpk = 0
+
       for currency in currencies:
          user_currency[currency.currency] = currency.price
+         ownerpk = currency.owner.id
+
+      context['ownerpk'] = ownerpk
 
       #generate figure using matplotlib
       chart = self.get_plot(user_currency)
