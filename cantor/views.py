@@ -3,12 +3,15 @@ from django.shortcuts import render, get_object_or_404
 import requests
 import json
 from django.views import generic
-from .forms import BuyCurrencyForm, SellCurrencyForm
+from .forms import BuyCurrencyForm, BarTypeForm, SellSomeCurrencyForm, SellAllCurrencyForm
 from django.db.models import Sum
 #generate graph
 import matplotlib.pyplot as plt
 import base64
 from io import BytesIO
+
+from django.urls import reverse, reverse_lazy
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 def Home(request):
@@ -111,34 +114,35 @@ class Account(generic.ListView):
       
       return context
 
-class Statistic(generic.ListView):
+class Statistic(generic.FormView):
    model = Currency
    template_name = 'statistic.html'
+   form_class = BarTypeForm
+   success_url = 'home'
 
    def get_context_data(self, *args, **kwargs):
+      #type of chart
+      self.chart_type = self.request.session.get('chart_type')
       context = super(Statistic, self).get_context_data(*args, **kwargs)
       #get 'pk' from url
       pk = self.kwargs['pk']
       context['pk'] = pk
-
       #choose correct user
       appropriate_user = get_object_or_404(Profile, id=self.kwargs['pk'])
-
+      self.owner = appropriate_user.user
       #choose currency of user
       currencies = Currency.objects.filter(owner=appropriate_user.user)
       context['currencies'] = currencies
-
-      user_currency = {}
+      self.user_currency = {}
       ownerpk = 0
-
       for currency in currencies:
-         user_currency[currency.currency] = currency.price
+         self.user_currency[currency.currency] = currency.price
          ownerpk = currency.owner.id
 
+      context['user_currency'] = self.user_currency
       context['ownerpk'] = ownerpk
-
       #generate figure using matplotlib
-      chart = self.get_plot(user_currency)
+      chart = self.get_plot(self.chart_type, self.user_currency)
       context['chart'] = chart
 
       return context
@@ -153,17 +157,31 @@ class Statistic(generic.ListView):
       buffer.close()
       return graph
 
-   def get_plot(self, currencies):
+   def get_plot(self, chart_type, currencies):
       plt.switch_backend('AGG')
-      plt.figure(figsize=(10,10))
+      plt.figure(figsize=(7,7))
       plt.title('Currencies')
       courses = list(currencies.keys())
       values = list(currencies.values())
-      plt.bar(courses, values)
+      if chart_type == '#1':
+         plt.bar(courses, values)
+      elif chart_type == '#2':
+         plt.pie(labels=courses, data=values, x=values)
       graph = self.get_graph()
       return graph
 
-class SellCurrency(generic.UpdateView):
-    model = Currency
-    form_class = SellCurrencyForm
-    template_name = 'sell_currency.html'
+   def form_valid(self, form):
+      self.chart_type = form.cleaned_data['chart_type']
+      self.request.session['chart_type'] = self.chart_type
+      return HttpResponseRedirect(reverse("stats", args=[self.kwargs['pk']]))
+
+class SellSomeCurrency(generic.UpdateView):
+   model = Currency
+   form_class = SellSomeCurrencyForm
+   template_name = 'sell_some_currency.html'
+
+class SellAllCurrency(generic.DeleteView):
+   model = Currency
+   form_class = SellAllCurrencyForm
+   template_name = 'sell_all_currency.html'
+   success_url = reverse_lazy('home')

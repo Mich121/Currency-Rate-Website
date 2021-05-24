@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('cantor.urls')),
     path('members/', include('django.contrib.auth.urls')),
     path('members/', include('members.urls')),
+    path('blog/', include('blog.urls')),
 ]

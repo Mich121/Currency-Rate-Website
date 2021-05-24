@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if user.id == currency.owner.id %}
+        <div class="form-group">
+            <form method="POST">
+            {% csrf_token %}
+            <button class="btn btn-danger" style="color: white; text-align: center; width: 100%;">Sell All</button>
+        </div>
+    {% else %}
+        You are not allowed...
+    {% endif %}
+{% else %}
+    You are not allowed...
+{% endif %}
+{% endblock %}

@@ -11,11 +11,20 @@
             <div class="card-body">
               <p class="card-text">{{currency.price}} $ in ({{currency.currency}})</p>
             </div>
-            <a class="btn btn-danger" href="{% url 'sell_currency' currency.pk %}" role="button" style="padding-bottom: 10px; text-align: center; width: 100%;">Sell</a>
+            <hr>
+            <a class="btn btn-danger" href="{% url 'sell_some_currency' currency.pk %}" role="button" style="text-align: center; width: 100%;">Sell Some</a>
+            <div style="padding-top: 3px;">
+            <a class="btn btn-danger" href="{% url 'sell_all_currency' currency.pk %}" role="button" style="text-align: center; width: 100%;">Sell All</a>
+            </div>
         </div>
     {% endif %}
 {% endfor %}
-
+    <form action="" method="POST">
+        {%csrf_token%}
+        {{form}}
+        </br>
+        <button type="submit" class="btn btn-primary">View</button>
+    </form>
     {% if chart %}
         <img src="data:image/png;base64, {{chart|safe}}">
     {% endif %}

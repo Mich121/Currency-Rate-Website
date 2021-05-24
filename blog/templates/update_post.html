@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if user.id == post.author.id %}
+        <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-warning" style="color: white;">Update Post</button>
+        </div>
+    {% else %}
+        You are not allowed...
+    {% endif %}
+{% else %}
+    You are not allowed...
+{% endif %}
+{% endblock %}

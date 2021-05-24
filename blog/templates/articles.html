@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for post in object_list %}
+    <div class="card text-white bg-primary mb-3" style="max-width: 18rem; display: inline-block;">
+        <div class="card-header"><h1><a href="{% url 'article' post.id %}" style="color: white; text-decoration: none;"> {{post.title}} </a></h1></div>
+        <div class="card-body" style="width: 400px; height: 200px;">
+        {% if user.is_authenticated %}
+            {% if user.id == post.author.id %}
+                <a href="{% url 'article_update' post.id %}"><button type="button" class="btn btn-warning">Edit</button></a>
+                <a href="{% url 'article_delete' post.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+            {% endif %}
+        {% endif %}
+        <hr>  
+        <p class="card-text">{{ post.body|truncatewords:7 }}</p>
+        </br>
+        {{post.post_date}}, {{post.author}}
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}

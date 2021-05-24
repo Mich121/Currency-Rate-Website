@@ -54,10 +54,10 @@
                             </a>
                             <ul class="collapse show nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                                 <li class="w-100">
-                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Articles</span></a>
+                                    <a href="{% url 'articles' %}" class="nav-link px-0"> <span class="d-none d-sm-inline">Articles</span></a>
                                 </li>
                                 <li>
-                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Add Article</span></a>
+                                    <a href="{% url 'add_post' %}" class="nav-link px-0"> <span class="d-none d-sm-inline">Add Article</span></a>
                                 </li>
                             </ul>
                         </li>
