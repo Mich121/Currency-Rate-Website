@@ -13,13 +13,20 @@
 
 </br></br>
 <h2>Comments</h2>
+<hr>
 {% if not post.comments.all %}
   Not comments yet...<a href="{% url 'add_comment' post.id %}"><button type="button" class="btn btn-secondary">Add One</button></a>
 {% else %}
   <a href="{% url 'add_comment' post.id %}"><button type="button" class="btn btn-secondary">Add Comment</button></a> 
 </br></br> 
   {% for comment in post.comments.all %}
-    {{comment.name}} - {{comment.date_added}} </br> {{comment.body}} <hr>
+
+  {{comment.name}} - {{comment.date_added}} </br> {{comment.body}} </br>
+  {% if user.id == comment.author.id %}
+  <a href="{% url 'delete_comment' comment.id %}"><button type="button" class="btn btn-secondary">Delete Comment</button></a>
+  {% endif %}  
+  <hr>
+  
   {% endfor %}
 {% endif %}
 

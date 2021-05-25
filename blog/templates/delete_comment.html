@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if user.is_authenticated %}
+        <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            <strong>Are you sure?</strong></br>
+            <button class="btn btn-danger">Delete Comment</button>
+        </div>
+{% else %}
+        You are not allowed...
+
+{% endif %}
+{% endblock %}

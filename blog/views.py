@@ -34,3 +34,13 @@ class AddCommentView(generic.CreateView):
     form_class = CommentForm
     template_name = 'add_comment.html'
     success_url = reverse_lazy('home')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(AddCommentView, self).get_context_data(*args, **kwargs)
+        context['pk'] = self.kwargs['pk']
+        return context
+
+class DeleteCommentView(generic.DeleteView):
+    model = Comment
+    template_name = 'delete_comment.html'
+    success_url = reverse_lazy('home')

@@ -25,10 +25,11 @@ class EditPostForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('post', 'name', 'body')
+        fields = ('post', 'author', 'name', 'body')
 
         widgets = {
             'post': forms.TextInput(attrs={'class':'form-control', 'value':'', 'placeholder':'Post id...', 'id':'elder', 'type':'hidden'}),
+            'author': forms.TextInput(attrs={'class':'form-control', 'value':'', 'id':'userid', 'type':'hidden'}),
             'name': forms.TextInput(attrs={'class':'form-control'}),
             'body': forms.Textarea(attrs={'class':'form-control'}),
         }

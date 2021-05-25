@@ -7,10 +7,12 @@
         {{ form.as_p }}
         <button class="btn btn-warning" style="color: white;">Add Comment</button>
     </div>
-    
+
     <script>
-        var name = "{{user.id}}";
+        var name = "{{pk}}";
         document.getElementById("elder").value = name;
+        var userid = "{{user.id}}";
+        document.getElementById("userid").value = userid;
     </script>   
 
 {% endblock %}
